@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Timber Homes | Wendy & Log Houses</title>
+<style>
+  :root{
+    --dark-green:#1f3d20;
+    --mid-green:#2e5a30;
+    --gold:#d4a93a;
+    --cream:#f5efe1;
+    --brown:#5c3a21;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--cream);color:#222;}
+  h1,h2,h3{font-family:'Georgia',serif;}
+
+  header{
+    position:fixed;top:0;left:0;width:100%;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 30px;background:rgba(31,61,32,0.92);
+    backdrop-filter:blur(4px);
+  }
+  header .logo{display:flex;align-items:center;gap:12px;}
+  header .logo img{height:60px;width:60px;border-radius:50%;}
+  header .logo span{color:var(--gold);font-weight:bold;font-size:1.3rem;letter-spacing:1px;}
+  nav a{color:#fff;margin-left:25px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:.2s;}
+  nav a:hover{color:var(--gold);}
+
+  .hamburger{
+    display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:34px;height:30px;background:none;border:none;cursor:pointer;z-index:101;
+  }
+  .hamburger span{
+    display:block;height:3px;width:100%;background:#fff;border-radius:2px;
+    transition:.3s;
+  }
+  .hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+  .hero{position:relative;height:100vh;overflow:hidden;}
+  .hero video{position:absolute;top:50%;left:50%;width:100%;height:100%;object-fit:cover;transform:translate(-50%,-50%);}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.6));}
+  .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:0 20px;}
+  .hero-content h1{font-size:3.2rem;color:#fff;text-shadow:2px 2px 8px rgba(0,0,0,.6);}
+  .hero-content h1 span{color:var(--gold);}
+  .hero-content p{font-size:1.3rem;margin-top:15px;max-width:650px;text-shadow:1px 1px 6px rgba(0,0,0,.6);}
+  .btn{
+    display:inline-block;margin-top:30px;padding:14px 34px;
+    background:var(--gold);color:var(--dark-green);font-weight:bold;
+    text-decoration:none;border-radius:4px;letter-spacing:1px;
+    transition:.25s;box-shadow:0 4px 14px rgba(0,0,0,.4);
+  }
+  .btn:hover{background:#fff;transform:translateY(-2px);}
+
+  section{padding:80px 20px;}
+  .section-title{text-align:center;margin-bottom:50px;}
+  .section-title h2{font-size:2.3rem;color:var(--dark-green);position:relative;display:inline-block;}
+  .section-title h2::after{content:"";display:block;width:70px;height:4px;background:var(--gold);margin:14px auto 0;}
+  .section-title p{color:#555;margin-top:10px;font-size:1.05rem;}
+
+  /* About */
+  .about{background:#fff;}
+  .features{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;max-width:1100px;margin:0 auto;
+  }
+  .feature{
+    text-align:center;padding:30px 20px;border:1px solid #eee;border-radius:10px;
+    transition:.25s;background:var(--cream);
+  }
+  .feature:hover{transform:translateY(-6px);box-shadow:0 10px 25px rgba(0,0,0,.08);}
+  .feature .icon{font-size:2.5rem;margin-bottom:15px;}
+  .feature h3{color:var(--mid-green);margin-bottom:10px;font-size:1.15rem;}
+  .feature p{color:#555;font-size:.95rem;}
+
+  /* Sizes */
+  .sizes{background:var(--dark-green);color:#fff;}
+  .sizes .section-title h2{color:#fff;}
+  .sizes .section-title p{color:#cfd9cf;}
+  .sizes-wrap{
+    max-width:1000px;margin:0 auto;background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:40px;
+    display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start;
+  }
+  .sizes-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:10px 30px;flex:1;min-width:260px;
+  }
+  .sizes-grid div{
+    background:rgba(255,255,255,.08);padding:10px 14px;border-radius:6px;
+    font-weight:600;letter-spacing:.5px;
+  }
+  .custom-note{
+    align-self:center;text-align:center;background:var(--gold);color:var(--dark-green);
+    padding:18px 26px;border-radius:8px;font-weight:bold;font-size:1.1rem;
+  }
+  .ideal-for{max-width:1000px;margin:50px auto 0;text-align:center;}
+  .ideal-for ul{
+    list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:25px;
+  }
+  .ideal-for li{
+    background:rgba(255,255,255,.1);padding:10px 22px;border-radius:30px;
+    border:1px solid var(--gold);font-weight:600;
+  }
+
+  /* Gallery */
+  .gallery{background:#fff;}
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;max-width:1100px;margin:0 auto;
+  }
+  .gallery-grid img{width:100%;height:260px;object-fit:cover;border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);transition:.3s;}
+  .gallery-grid img:hover{transform:scale(1.03);}
+
+  /* Contact / CTA */
+  .cta{
+    background:linear-gradient(135deg,var(--brown),var(--dark-green));
+    color:#fff;text-align:center;
+  }
+  .cta h2{font-size:2.2rem;margin-bottom:10px;}
+  .cta p{font-size:1.1rem;margin-bottom:30px;color:#e9e3d3;}
+  .contact-info{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:30px;margin-top:20px;font-size:1.05rem;
+  }
+  .contact-info div{display:flex;align-items:center;gap:10px;}
+  .contact-info a{color:var(--gold);text-decoration:none;font-weight:600;}
+
+  footer{
+    background:var(--dark-green);color:#cfd9cf;text-align:center;padding:25px;font-size:.9rem;
+  }
+  footer .badge{color:var(--gold);font-weight:bold;}
+
+  @media(max-width:800px){
+    .hamburger{display:flex;}
+    nav{
+      position:fixed;top:0;right:0;height:100vh;width:230px;
+      background:rgba(19,38,20,0.97);flex-direction:column;
+      align-items:flex-start;justify-content:center;gap:10px;
+      transform:translateX(100%);transition:transform .3s ease;
+      padding:30px;
+    }
+    nav.active{transform:translateX(0);}
+    nav a{margin:0;padding:12px 0;font-size:1.1rem;width:100%;border-bottom:1px solid rgba(255,255,255,.1);}
+  }
+
+  @media(max-width:700px){
+    .hero-content h1{font-size:2.1rem;}
+    header .logo span{font-size:1rem;}
+    .hero-content p{font-size:1.05rem;}
+    section{padding:60px 16px;}
+    .sizes-wrap{padding:24px;}
+    .sizes-grid{grid-template-columns:repeat(2,1fr);}
+    .contact-info{flex-direction:column;gap:14px;}
+  }
+
+  @media(max-width:480px){
+    .hero-content h1{font-size:1.6rem;}
+    header .logo img{height:46px;width:46px;}
+    header .logo span{font-size:.85rem;}
+    .sizes-grid{grid-template-columns:1fr;}
+    .gallery-grid img{height:200px;}
+  }
+
+  body.nav-open{overflow:hidden;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo-removebg-preview (1).png" alt="Elite Timber Homes Logo">
+    <span>ELITE TIMBER HOMES</span>
+  </div>
+  <nav id="primaryNav">
+    <a href="#about">About</a>
+    <a href="#sizes">Sizes</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primaryNav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="hero_video_cropped.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <h1>Crafting <span>Modern</span> Wendy &amp; Log Houses</h1>
+    <p>Built with style, strength and durability — quality timber structures designed to last a lifetime.</p>
+    <a href="#contact" class="btn">Get a Free Quote</a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-title">
+    <h2>Quality Wendy Houses, Built To Last</h2>
+    <p>Strong, durable and perfect for any need — built with quality timber you can trust.</p>
+  </div>
+  <div class="features">
+    <div class="feature">
+      <div class="icon">🪵</div>
+      <h3>Quality Timber</h3>
+      <p>Strong & durable materials sourced for longevity.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🚚</div>
+      <h3>Delivery</h3>
+      <p>We deliver to your site, wherever you are.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🛠️</div>
+      <h3>Installation</h3>
+      <p>Professional installation by our skilled team.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">✅</div>
+      <h3>Built To Last</h3>
+      <p>Quality you can trust, backed by our guarantee.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sizes" id="sizes">
+  <div class="section-title">
+    <h2>Sizes Available</h2>
+    <p>Standard sizes for every need — custom sizes always available.</p>
+  </div>
+  <div class="sizes-wrap">
+    <div class="sizes-grid">
+      <div>2m x 2m</div><div>6m x 6m</div>
+      <div>2m x 3m</div><div>6m x 7m</div>
+      <div>2.4m x 2.4m</div><div>6m x 8m</div>
+      <div>2.4m x 3m</div><div>7m x 7m</div>
+      <div>3m x 3m</div><div>8m x 8m</div>
+      <div>3m x 4m</div><div>8m x 10m</div>
+      <div>3m x 5m</div><div>10m x 10m</div>
+      <div>4m x 4m</div><div></div>
+      <div>4m x 5m</div><div></div>
+      <div>5m x 5m</div><div></div>
+    </div>
+    <div class="custom-note">Custom Sizes<br>Available!</div>
+  </div>
+  <div class="ideal-for">
+    <h3>Ideal For:</h3>
+    <ul>
+      <li>Storage</li>
+      <li>Accommodation</li>
+      <li>Home Office</li>
+      <li>Rental Units</li>
+      <li>Workshops</li>
+      <li>Garden Rooms</li>
+      <li>And More!</li>
+    </ul>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="section-title">
+    <h2>Our Work</h2>
+    <p>A look at some of our recently built timber homes.</p>
+  </div>
+  <div class="gallery-grid">
+    <img src="669057277_122103990674846454_1965161080715595699_n.jpg" alt="Timber home with deck and steps">
+    <img src="670425062_122103993980846454_223000395122282703_n.jpg" alt="Timber home with windmill backdrop">
+    <img src="671268647_122103993920846454_3136349008356838012_n.jpg" alt="Timber home under construction">
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <h2>Free Quote Today!</h2>
+  <p>Get in touch for a free quotation — call or WhatsApp us now.</p>
+  <div class="contact-info">
+    <div>📞 <a href="tel:+27721258472">+27 72 125 8472</a></div>
+    <div>✉️ <a href="mailto:Elitetimberhomes69@gmail.com">Elitetimberhomes69@gmail.com</a></div>
+    <div>📍 South Africa</div>
+  </div>
+</section>
+
+<footer>
+  <p>Elite Timber Homes — <span class="badge">Strong Structures, Lasting Value.</span></p>
+  <p>&copy; 2026 Elite Timber Homes. All rights reserved.</p>
+</footer>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const primaryNav = document.getElementById('primaryNav');
+
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = primaryNav.classList.toggle('active');
+    hamburgerBtn.classList.toggle('active', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen);
+    document.body.classList.toggle('nav-open', isOpen);
+  });
+
+  primaryNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      primaryNav.classList.remove('active');
+      hamburgerBtn.classList.remove('active');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+    });
+  });
+</script>
+</body>
+</html>
